@@ -18,23 +18,78 @@
 
 
 // ENTRADA DE DATOS > PROCESAMIENTO DE DATOS > SALIDA (O INFORMACIÓN)
-// Etapa 1 - Entrada de Datos
+const IVA = 21;
+let inflacion;
+let tasa;
 
-let monto = parseInt(prompt("Ingrese el Monto al Contado: (Hasta $1.000.000 pesos)"));
+// Etapa 1 - Entrada de Datos
+// Solicito el Monto
+
+let monto = 0;
 
 while ((monto <= 0) || (monto > 1000000)) {
     monto = parseInt(prompt("Ingrese el Monto al Contado: (Hasta $1.000.000 pesos )"));
 }
 
-for (let i = 1; i <= 20; i++){
-    let cuotas = parseInt(prompt("Ingrese la Cantidad de Cuotas:")); 
+//Solicitar el Plazo
+let plazo = 0;
+
+while ((plazo != 3) && (plazo != 6) && (plazo != 12) && (plazo != 24) && (plazo != 48)) {
+    plazo = parseInt(prompt("Ingrese la Cantidad de Cuotas: (3/6/12/24/48):"));
 }
 
-let interes = parseInt(prompt("Ingrese el Interés Mensual"));
+// Calculo la Tasa de Interés según el Plazo en Cuotas
+switch (plazo) {
+    case 3:
+        tasa = 25;
+        break;
+    case 6:
+        tasa = 45;
+        break;
+    case 12:
+        tasa = 90;
+        break;        
+    case 24:
+        tasa = 180;
+        break;
+    case 48:
+        tasa = 360;
+        break; 
+    default:
+        break;
+}
 
-const inflacionMensual = 8;
+// Solicito el Tipo de Inflación
+let tipoInflacion = prompt("Ingrese el País: (Argentina/Brasil/Uruguay/Otros)").toUpperCase();
 
-// Etapa 2 - Procesamiento de Datos
+// Valido el Tipo de Inflación
+switch (tipoInflacion) {
+    case "ARGENTINA":
+        inflacion = 100;
+        break;
+    case "BRASIL":
+        inflacion = 15;
+        break;
+    case "URUGUAY":
+        inflacion = 30;
+        break;        
+    default:
+        inflacion = 10;
+        break;
+}
+
+// Realizamos los Calculos
+function calculoDePrecioCuotas(monto, tna, cuotas) {
+    return (monto + ((monto * (tna - 100)) /100)) / cuotas;
+}
+
+const calcularMontoInteresConIVA = (valor) => {
+    return (valor * IVA) / 100;
+}
+
+const calcularMontoCapital = (valor) => {
+    return (valor * tasa) / 100;
+}
 
 
 // // Realizamos los Cálculos
